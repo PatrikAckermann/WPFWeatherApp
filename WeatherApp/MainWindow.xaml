@@ -7,6 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <TabControl>
+            <TabItem Header="Weather">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Location">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem HorizontalAlignment="Center" Height="20" Header="Settings" VerticalAlignment="Center" Width="54">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>
