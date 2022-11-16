@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace WeatherApp
 {
@@ -23,6 +24,13 @@ namespace WeatherApp
         public MainWindow()
         {
             InitializeComponent();
+            Trace.WriteLine("Test");
+            WeatherAPI.printWeather();
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
