@@ -8,8 +8,26 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TabControl SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Header="Weather">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem x:Name="weatherTabButton" Header="Weather">
+                <Grid x:Name="weatherTab" Background="#FFE5E5E5">
+                    <Image x:Name="weatherIcon" HorizontalAlignment="Left" Height="170" Margin="10,10,0,0" VerticalAlignment="Top" Width="172" Source="/img/placeholder.png"/>
+                    <Label x:Name="weatherLabel" Content="Current weather goes here" Margin="185,31,0,0" VerticalAlignment="Top" FontSize="36" Height="64" HorizontalAlignment="Left" Width="599"/>
+                    <Label Content="00°C" Margin="185,79,0,0" VerticalAlignment="Top" FontSize="48" HorizontalAlignment="Left" Width="110"/>
+                    <Label Content="Sunrise" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Sunset" HorizontalAlignment="Left" Margin="10,216,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,-0.345"/>
+                    <Label Content="Last update" HorizontalAlignment="Left" Margin="10,371,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Visibility" HorizontalAlignment="Left" Margin="10,247,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Windspeed" HorizontalAlignment="Left" Margin="10,278,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.263,0.271"/>
+                    <Label Content="Lowest temperature" HorizontalAlignment="Left" Margin="10,340,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Highest temperature" HorizontalAlignment="Left" Margin="10,309,0,0" VerticalAlignment="Top"/>
+                    <Label Content="0:00" HorizontalAlignment="Left" Margin="185,185,0,0" VerticalAlignment="Top"/>
+                    <Label Content="0:00" HorizontalAlignment="Left" Margin="185,216,0,0" VerticalAlignment="Top"/>
+                    <Label Content="0m" HorizontalAlignment="Left" Margin="185,247,0,0" VerticalAlignment="Top"/>
+                    <Label Content="0km/h" HorizontalAlignment="Left" Margin="185,278,0,0" VerticalAlignment="Top"/>
+                    <Label Content="0°C" HorizontalAlignment="Left" Margin="185,309,0,0" VerticalAlignment="Top"/>
+                    <Label Content="0°C" HorizontalAlignment="Left" Margin="185,340,0,0" VerticalAlignment="Top"/>
+                    <Label Content="0:00" HorizontalAlignment="Left" Margin="185,371,0,0" VerticalAlignment="Top"/>
+                </Grid>
             </TabItem>
             <TabItem Header="Location">
                 <Grid Background="#FFE5E5E5"/>

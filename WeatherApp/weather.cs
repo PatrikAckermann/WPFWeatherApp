@@ -30,7 +30,7 @@ namespace WeatherApp
             {
                 OWMObject.Root currentWeather = JsonConvert.DeserializeObject<OWMObject.Root>(response.Content);
                 Trace.WriteLine(response.Content);
-                Trace.WriteLine(currentWeather.weather[0].id);
+                Trace.WriteLine(currentWeather.weather[0].main);
                 Trace.WriteLine(currentWeather.weather[0].description);
             }
             else
