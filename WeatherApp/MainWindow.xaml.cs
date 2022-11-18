@@ -25,7 +25,7 @@ namespace WeatherApp
         {
             InitializeComponent();
             Trace.WriteLine("Test");
-            WeatherAPI.printWeather();
+            WeatherAPI.setCurrentWeather(placeLabel, weatherLabel, sunriseLabel, sunsetLabel, visibilityLabel, windspeedLabel, lowestTempLabel, highestTempLabel, lastUpdateLabel);
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

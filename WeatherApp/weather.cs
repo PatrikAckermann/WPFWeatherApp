@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using RestSharp;
 using Newtonsoft.Json;
+using System.Windows.Controls;
 
 namespace WeatherApp
 {
@@ -16,11 +17,7 @@ namespace WeatherApp
     { // http://api.openweathermap.org/geo/1.0/direct?q=
         private static string urlParameters = "?appid=b1c8a5cea60f17f305ee2d9e3305af25&lat=46.9480&lon=7.4474";
 
-        public static void printWeather()
-        {
-            getCurrentWeather();
-        }
-        private static async void getCurrentWeather()
+        public static async void setCurrentWeather(Label placeLabel, Label weatherLabel, Label sunriseLabel, Label sunsetLabel, Label visibilityLabel, Label windspeedLabel, Label minTempLabel, Label maxTempLabel, Label lastUpdateLabel)
         {
             var client = new RestClient("http://api.openweathermap.org/data/2.5/weather");
             var request = new RestRequest(urlParameters);
@@ -30,18 +27,46 @@ namespace WeatherApp
             {
                 OWMObject.Root currentWeather = JsonConvert.DeserializeObject<OWMObject.Root>(response.Content);
                 Trace.WriteLine(response.Content);
-                Trace.WriteLine(currentWeather.weather[0].main);
-                Trace.WriteLine(currentWeather.weather[0].description);
+                placeLabel.Content = currentWeather.name;
+                weatherLabel.Content = $"{kelvinToCelsius(currentWeather.main.temp)}°C, {currentWeather.weather[0].description}";
+                sunriseLabel.Content = timestampToTime(currentWeather.sys.sunrise + currentWeather.timezone);
+                sunsetLabel.Content = timestampToTime(currentWeather.sys.sunset + currentWeather.timezone);
+                visibilityLabel.Content = $"{currentWeather.visibility}m";
+                windspeedLabel.Content = $"{currentWeather.wind.speed}m/s";
+                minTempLabel.Content = $"{kelvinToCelsius(currentWeather.main.temp_min)}°C";
+                maxTempLabel.Content = $"{kelvinToCelsius(currentWeather.main.temp_max)}°C";
+                lastUpdateLabel.Content = timestampToTime(currentWeather.dt);
             }
             else
             {
                 Trace.WriteLine(response.ErrorMessage);
             }
         }
+
+        private static async void getIcon()
+        {
+            //if file doesnt exist, download it and put it in the img folder
+            var client = new RestClient("http://openweathermap.org/img/wn/"); // wn/IconID@2x.png Multiplicators: 2x, 4x
+            var request = new RestRequest(urlParameters);
+            var response = await client.GetAsync(request);
+            //load image
+        }
+
+        private static double kelvinToCelsius(double tempInCelsius)
+        {
+            return Math.Round(tempInCelsius - 273.15);
+        }
+
+        private static string timestampToTime(int timestamp)
+        {
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dateTime = dateTime.AddSeconds(timestamp);
+            return $"{dateTime.Hour}:{dateTime.Minute}";
+        }
     }
 }
 
-namespace OWMObject // OWM = Open Weather Map
+namespace OWMObject // OWM = Open Weather Map, made with https://json2csharp.com/
 {
     public class Clouds
     {
