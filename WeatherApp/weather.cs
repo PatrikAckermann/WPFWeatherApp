@@ -15,12 +15,12 @@ namespace WeatherApp
 {
     class WeatherAPI // API KEY: b1c8a5cea60f17f305ee2d9e3305af25
     { // http://api.openweathermap.org/geo/1.0/direct?q=
-        private static string urlParameters = "?appid=b1c8a5cea60f17f305ee2d9e3305af25&lat=46.9480&lon=7.4474";
+        private static string apiKey = "b1c8a5cea60f17f305ee2d9e3305af25";
 
-        public static async void setCurrentWeather(Label placeLabel, Label weatherLabel, Label sunriseLabel, Label sunsetLabel, Label visibilityLabel, Label windspeedLabel, Label minTempLabel, Label maxTempLabel, Label lastUpdateLabel)
+        public static async void setCurrentWeather(double latitude, double longitude, Label placeLabel, Label weatherLabel, Label sunriseLabel, Label sunsetLabel, Label visibilityLabel, Label windspeedLabel, Label minTempLabel, Label maxTempLabel, Label lastUpdateLabel)
         {
             var client = new RestClient("http://api.openweathermap.org/data/2.5/weather");
-            var request = new RestRequest(urlParameters);
+            var request = new RestRequest($"?appid={apiKey}&lat={latitude}&lon={longitude}");
             var response = await client.GetAsync(request);
 
             if (response.IsSuccessful)
@@ -47,7 +47,7 @@ namespace WeatherApp
         {
             //if file doesnt exist, download it and put it in the img folder
             var client = new RestClient("http://openweathermap.org/img/wn/"); // wn/IconID@2x.png Multiplicators: 2x, 4x
-            var request = new RestRequest(urlParameters);
+            var request = new RestRequest();
             var response = await client.GetAsync(request);
             //load image
         }
