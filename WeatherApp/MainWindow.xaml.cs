@@ -46,6 +46,16 @@ namespace WeatherApp
             coordinateObj.success = false;
             return coordinateObj;
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void searchButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
     public class CoordinateObj

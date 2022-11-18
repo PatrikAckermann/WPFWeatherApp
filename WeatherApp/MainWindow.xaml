@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="320" Width="646" MinWidth="645" MinHeight="350">
     <Grid>
-        <TabControl MinWidth="640" MinHeight="435">
+        <TabControl MinWidth="640" MinHeight="300">
             <TabItem x:Name="weatherTabButton" Header="Weather">
                 <Grid x:Name="weatherTab" Background="#FFE5E5E5">
                     <Image x:Name="weatherIcon" HorizontalAlignment="Left" Height="170" Margin="10,10,0,0" VerticalAlignment="Top" Width="172" Source="/img/placeholder.png"/>
@@ -30,7 +30,29 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Location">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5" RenderTransformOrigin="0.5,0.5">
+                    <Grid.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="1"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Grid.RenderTransform>
+                    <Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="citySearch" Margin="67,14,420,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="TextBox_TextChanged" Height="18"/>
+                    <TextBox x:Name="countrySearch" Margin="67,45,420,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18"/>
+                    <Label Content="City" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="30" RenderTransformOrigin="0.567,0.617"/>
+                    <Label Content="Country" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Height="26" Width="52"/>
+                    <ListBox x:Name="searchListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,10,215,10" HorizontalAlignment="Right" Width="200"/>
+                    <ListBox x:Name="savedListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,10,10,10" HorizontalAlignment="Right" Width="200"/>
+                    <Button x:Name="searchButton" Content="Search" Margin="10,72,420,0" VerticalAlignment="Top" Click="searchButton_Click" Height="20"/>
+                    <Button Content="Save To List" Margin="10,0,420,35" Height="20" VerticalAlignment="Bottom"/>
+                    <Button Content="Delete From List" Margin="10,0,420,10" Height="20" VerticalAlignment="Bottom"/>
+                    <Button Content="Open in Weather Tab" HorizontalAlignment="Left" Margin="10,0,0,60" VerticalAlignment="Bottom" Width="210"/>
+
+                </Grid>
             </TabItem>
             <TabItem HorizontalAlignment="Center" Height="20" Header="Settings" VerticalAlignment="Center" Width="54">
                 <Grid Background="#FFE5E5E5"/>
