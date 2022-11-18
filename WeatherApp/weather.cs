@@ -10,6 +10,9 @@ using System.Diagnostics;
 using RestSharp;
 using Newtonsoft.Json;
 using System.Windows.Controls;
+using System.IO;
+using System.Net;
+using System.Windows.Media.Imaging;
 
 namespace WeatherApp
 {
@@ -17,7 +20,7 @@ namespace WeatherApp
     { // http://api.openweathermap.org/geo/1.0/direct?q=
         private static string apiKey = "b1c8a5cea60f17f305ee2d9e3305af25";
 
-        public static async void setCurrentWeather(double latitude, double longitude, Label placeLabel, Label weatherLabel, Label sunriseLabel, Label sunsetLabel, Label visibilityLabel, Label windspeedLabel, Label minTempLabel, Label maxTempLabel, Label lastUpdateLabel)
+        public static async void setCurrentWeather(double latitude, double longitude, Label placeLabel, Label weatherLabel, Label sunriseLabel, Label sunsetLabel, Label visibilityLabel, Label windspeedLabel, Label minTempLabel, Label maxTempLabel, Label lastUpdateLabel, Image image)
         {
             var client = new RestClient("http://api.openweathermap.org/data/2.5/weather");
             var request = new RestRequest($"?appid={apiKey}&lat={latitude}&lon={longitude}");
@@ -36,6 +39,8 @@ namespace WeatherApp
                 minTempLabel.Content = $"{kelvinToCelsius(currentWeather.main.temp_min)}°C";
                 maxTempLabel.Content = $"{kelvinToCelsius(currentWeather.main.temp_max)}°C";
                 lastUpdateLabel.Content = timestampToTime(currentWeather.dt);
+
+                setIcon(currentWeather.weather[0].icon, image);
             }
             else
             {
@@ -43,13 +48,9 @@ namespace WeatherApp
             }
         }
 
-        private static async void getIcon()
+        private static async void setIcon(string iconId, Image image)
         {
-            //if file doesnt exist, download it and put it in the img folder
-            var client = new RestClient("http://openweathermap.org/img/wn/"); // wn/IconID@2x.png Multiplicators: 2x, 4x
-            var request = new RestRequest();
-            var response = await client.GetAsync(request);
-            //load image
+            image.Source = new BitmapImage(new Uri($"http://openweathermap.org/img/wn/{iconId}@4x.png"));
         }
 
         private static double kelvinToCelsius(double tempInCelsius)

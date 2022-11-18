@@ -28,7 +28,7 @@ namespace WeatherApp
             InitializeComponent();
 
             CoordinateObj coordinates = getCoordinates();
-            WeatherAPI.setCurrentWeather(coordinates.lat, coordinates.lon, placeLabel, weatherLabel, sunriseLabel, sunsetLabel, visibilityLabel, windspeedLabel, lowestTempLabel, highestTempLabel, lastUpdateLabel);
+            WeatherAPI.setCurrentWeather(coordinates.lat, coordinates.lon, placeLabel, weatherLabel, sunriseLabel, sunsetLabel, visibilityLabel, windspeedLabel, lowestTempLabel, highestTempLabel, lastUpdateLabel, weatherIcon);
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
