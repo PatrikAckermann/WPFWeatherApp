@@ -31,11 +31,6 @@ namespace WeatherApp
             WeatherAPI.setCurrentWeather(coordinates.lat, coordinates.lon, placeLabel, weatherLabel, sunriseLabel, sunsetLabel, visibilityLabel, windspeedLabel, lowestTempLabel, highestTempLabel, lastUpdateLabel, weatherIcon);
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private CoordinateObj getCoordinates()
         {
             var client = new RestClient("http://ip-api.com/json/");

@@ -5,28 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="646" MinWidth="645" MinHeight="465">
+        Title="MainWindow" Height="320" Width="646" MinWidth="645" MinHeight="350">
     <Grid>
-        <TabControl SelectionChanged="TabControl_SelectionChanged" MinWidth="640" MinHeight="435">
+        <TabControl MinWidth="640" MinHeight="435">
             <TabItem x:Name="weatherTabButton" Header="Weather">
                 <Grid x:Name="weatherTab" Background="#FFE5E5E5">
                     <Image x:Name="weatherIcon" HorizontalAlignment="Left" Height="170" Margin="10,10,0,0" VerticalAlignment="Top" Width="172" Source="/img/placeholder.png"/>
-                    <Label x:Name="placeLabel" Content="Location goes here" Margin="185,31,0,0" VerticalAlignment="Top" FontSize="36" Height="64" HorizontalAlignment="Left" Width="445"/>
-                    <Label x:Name="weatherLabel" Content="00°C, sunny" Margin="185,79,0,0" VerticalAlignment="Top" FontSize="48" HorizontalAlignment="Left" Width="445"/>
+                    <Label x:Name="placeLabel" Content="Location goes here" Margin="185,31,10,0" VerticalAlignment="Top" FontSize="36" Height="64"/>
+                    <Label x:Name="weatherLabel" Content="00°C, sunny" Margin="185,79,10,0" VerticalAlignment="Top" FontSize="48"/>
                     <Label Content="Sunrise" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top"/>
                     <Label Content="Sunset" HorizontalAlignment="Left" Margin="10,216,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,-0.345"/>
-                    <Label Content="Last update" HorizontalAlignment="Left" Margin="10,371,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Last update:" Margin="0,10,42,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="74"/>
                     <Label Content="Visibility" HorizontalAlignment="Left" Margin="10,247,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Windspeed" HorizontalAlignment="Left" Margin="10,278,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.263,0.271"/>
-                    <Label Content="Lowest temperature" HorizontalAlignment="Left" Margin="10,340,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Highest temperature" HorizontalAlignment="Left" Margin="10,309,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Windspeed" HorizontalAlignment="Left" Margin="320,185,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.263,0.271"/>
+                    <Label Content="Lowest temperature" HorizontalAlignment="Left" Margin="320,247,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Highest temperature" HorizontalAlignment="Left" Margin="320,216,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="sunriseLabel" Content="0:00" HorizontalAlignment="Left" Margin="185,185,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="sunsetLabel" Content="0:00" HorizontalAlignment="Left" Margin="185,216,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="visibilityLabel" Content="0m" HorizontalAlignment="Left" Margin="185,247,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="windspeedLabel" Content="0km/h" HorizontalAlignment="Left" Margin="185,278,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="highestTempLabel" Content="0°C" HorizontalAlignment="Left" Margin="185,309,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="lowestTempLabel" Content="0°C" HorizontalAlignment="Left" Margin="185,340,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="lastUpdateLabel" Content="0:00" HorizontalAlignment="Left" Margin="185,371,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="windspeedLabel" Content="0km/h" HorizontalAlignment="Left" Margin="505,185,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="highestTempLabel" Content="0°C" HorizontalAlignment="Left" Margin="505,216,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lowestTempLabel" Content="0°C" HorizontalAlignment="Left" Margin="505,247,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lastUpdateLabel" Content="0:00" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="32"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Location">
