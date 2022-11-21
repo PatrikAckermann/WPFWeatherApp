@@ -20,45 +20,24 @@ namespace WeatherApp
     { // http://api.openweathermap.org/geo/1.0/direct?q=
         private static string apiKey = "b1c8a5cea60f17f305ee2d9e3305af25";
 
-        public static async void setCurrentWeather(double latitude, double longitude, Label placeLabel, Label weatherLabel, Label sunriseLabel, Label sunsetLabel, Label visibilityLabel, Label windspeedLabel, Label minTempLabel, Label maxTempLabel, Label lastUpdateLabel, Image image)
+        public static string requestWeather(double latitude, double longitude)
         {
             var client = new RestClient("http://api.openweathermap.org/data/2.5/weather");
             var request = new RestRequest($"?appid={apiKey}&lat={latitude}&lon={longitude}");
-            var response = await client.GetAsync(request);
-
+            var response = client.Get(request);
             if (response.IsSuccessful)
             {
-                OWMObject.Root currentWeather = JsonConvert.DeserializeObject<OWMObject.Root>(response.Content);
-                Trace.WriteLine(response.Content);
-                placeLabel.Content = currentWeather.name;
-                weatherLabel.Content = $"{kelvinToCelsius(currentWeather.main.temp)}°C, {currentWeather.weather[0].description}";
-                sunriseLabel.Content = timestampToTime(currentWeather.sys.sunrise + currentWeather.timezone);
-                sunsetLabel.Content = timestampToTime(currentWeather.sys.sunset + currentWeather.timezone);
-                visibilityLabel.Content = $"{currentWeather.visibility}m";
-                windspeedLabel.Content = $"{currentWeather.wind.speed}m/s";
-                minTempLabel.Content = $"{kelvinToCelsius(currentWeather.main.temp_min)}°C";
-                maxTempLabel.Content = $"{kelvinToCelsius(currentWeather.main.temp_max)}°C";
-                lastUpdateLabel.Content = timestampToTime(currentWeather.dt);
-
-                setIcon(currentWeather.weather[0].icon, image);
+                return response.Content;
             }
-            else
-            {
-                Trace.WriteLine(response.ErrorMessage);
-            }
+            return "";
         }
 
-        private static async void setIcon(string iconId, Image image)
-        {
-            image.Source = new BitmapImage(new Uri($"http://openweathermap.org/img/wn/{iconId}@4x.png"));
-        }
-
-        private static double kelvinToCelsius(double tempInCelsius)
+        public static double kelvinToCelsius(double tempInCelsius)
         {
             return Math.Round(tempInCelsius - 273.15);
         }
 
-        private static string timestampToTime(int timestamp)
+        public static string timestampToTime(int timestamp)
         {
             DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             dateTime = dateTime.AddSeconds(timestamp);

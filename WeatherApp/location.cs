@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using locationResponse;
+using locationObj;
 using System.Windows.Controls;
 using System.Diagnostics;
 
@@ -14,22 +14,6 @@ namespace WeatherApp
 {
     internal class LocationAPI
     {
-        private static string apiKey = "b1c8a5cea60f17f305ee2d9e3305af25";
-        public static void searchLocations(TextBox city, TextBox country, ListBox list)
-        {
-            list.Items.Clear();
-            if (city.Text != "")
-            {
-                var locations = GetLocations(city.Text, country.Text, apiKey);
-                if (locations != null)
-                {
-                    foreach (var l in locations)
-                    {
-                        list.Items.Add($"{l.name}, {l.country}");
-                    }
-                }
-            }
-        }
         public static List<Location> GetLocations(string city, string country, string apiKey)
         {
             var client = new RestClient("http://api.openweathermap.org/geo/1.0/direct");
@@ -63,7 +47,7 @@ namespace WeatherApp
     }
 }
 
-namespace locationResponse
+namespace locationObj
 {
     public class LocalNames
     {
