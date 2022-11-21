@@ -54,7 +54,7 @@ namespace WeatherApp
 
         private void searchButton_Click(object sender, RoutedEventArgs e)
         {
-
+            LocationAPI.searchLocations(citySearch, countrySearch, searchListBox);
         }
     }
 
