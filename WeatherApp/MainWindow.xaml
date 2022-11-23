@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="320" Width="646" MinWidth="645" MinHeight="350">
+        Title="MainWindow" Height="442" Width="646" MinWidth="645" MinHeight="350">
     <Grid>
         <TabControl x:Name="tabControl" MinWidth="640" MinHeight="300">
             <TabItem x:Name="weatherTabButton" Header="Weather">
@@ -26,7 +26,20 @@
                     <Label x:Name="windspeedLabel" Content="maybe the API" HorizontalAlignment="Left" Margin="505,185,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="highestTempLabel" Content="servers are down" HorizontalAlignment="Left" Margin="505,216,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="lowestTempLabel" Content="idk" HorizontalAlignment="Left" Margin="505,247,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="lastUpdateLabel" Content="0:00" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="32"/>
+                    <Label x:Name="lastUpdateLabel" Content="0:00" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="41" HorizontalContentAlignment="Right"/>
+                    <ListView x:Name="forecastListview" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,278,10,10" SelectionChanged="ListView_SelectionChanged" Background="#FFE5E5E5">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Icon}" Margin="2" VerticalAlignment="Center" Width="30" Height="30"/>
+                                    <TextBlock Text="{Binding Date}" Margin="2" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Time}" Margin="2" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Temperature}" Margin="2" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Weather}" Margin="2" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
             </TabItem>
             <TabItem Header="Location">
@@ -53,9 +66,6 @@
                     <Button x:Name="openWeatherButton" Content="Open in Weather Tab" Margin="10,0,420,60" VerticalAlignment="Bottom" IsEnabled="False" Click="openWeatherButton_Click"/>
 
                 </Grid>
-            </TabItem>
-            <TabItem HorizontalAlignment="Center" Height="20" Header="Settings" VerticalAlignment="Center" Width="54">
-                <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
 

@@ -175,9 +175,9 @@ namespace WeatherApp
         public void setCurrentWeather(double latitude, double longitude)
         {
             string response = WeatherAPI.requestWeather(latitude, longitude);
+            string forecastResponse = WeatherAPI.requestForecast(latitude, longitude);
 
             OWMObject.Root currentWeather = JsonConvert.DeserializeObject<OWMObject.Root>(response);
-            Trace.WriteLine(response);
             placeLabel.Content = currentWeather.name;
             weatherLabel.Content = $"{kelvinToCelsius(currentWeather.main.temp)}°C, {currentWeather.weather[0].description}";
             sunriseLabel.Content = timestampToTime(currentWeather.sys.sunrise + currentWeather.timezone);
@@ -186,9 +186,18 @@ namespace WeatherApp
             windspeedLabel.Content = $"{currentWeather.wind.speed}m/s";
             lowestTempLabel.Content = $"{kelvinToCelsius(currentWeather.main.temp_min)}°C";
             highestTempLabel.Content = $"{kelvinToCelsius(currentWeather.main.temp_max)}°C";
-            lastUpdateLabel.Content = timestampToTime(currentWeather.dt);
-
+            lastUpdateLabel.Content = timestampToTime(currentWeather.dt + currentWeather.timezone);
             setIcon(currentWeather.weather[0].icon);
+
+            ForecastObj.Root forecast = JsonConvert.DeserializeObject<ForecastObj.Root>(forecastResponse);
+            List<forecastObj> forecastObjects = new List<forecastObj>();
+            foreach (var f in forecast.list)
+            {
+                Trace.WriteLine(f.main.temp);
+                forecastObjects.Add(new forecastObj() { Icon = new BitmapImage(new Uri($"http://openweathermap.org/img/wn/{f.weather[0].icon}.png")), Date = $"{timestampToWeekday(f.dt + currentWeather.timezone)}", Time = $"{timestampToTime(f.dt)} -", Temperature=$"{kelvinToCelsius(f.main.temp)}°C -", Weather = f.weather[0].description });
+            }
+
+            forecastListview.ItemsSource = forecastObjects;
         }
 
         private void setIcon(string iconId)
@@ -205,6 +214,11 @@ namespace WeatherApp
         {
             deleteFromList();
         }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
     public class CoordinateObj
@@ -212,6 +226,15 @@ namespace WeatherApp
         public bool success;
         public double lat { get; set; }
         public double lon { get; set; }
+    }
+
+    public class forecastObj
+    {
+        public BitmapImage Icon { get; set; }
+        public string Date { get; set; }
+        public string Time { get; set; }
+        public string Weather { get; set; }
+        public string Temperature { get; set; }
     }
 
 }

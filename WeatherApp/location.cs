@@ -17,7 +17,7 @@ namespace WeatherApp
         public static List<Location> GetLocations(string city, string country, string apiKey)
         {
             var client = new RestClient("http://api.openweathermap.org/geo/1.0/direct");
-            string requestStr = $"?appid={apiKey}&q={city}&limit=100";
+            string requestStr = $"?appid={apiKey}&limit=100&q={city}";
             if (country != "")
             {
                 requestStr += $",{country}";
