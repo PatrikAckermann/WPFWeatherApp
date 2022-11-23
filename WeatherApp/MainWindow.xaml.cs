@@ -16,6 +16,8 @@ using System.Diagnostics;
 using RestSharp;
 using Newtonsoft.Json;
 using static WeatherApp.WeatherAPI;
+using System.Runtime.InteropServices;
+using System.IO;
 
 namespace WeatherApp
 {
@@ -26,16 +28,17 @@ namespace WeatherApp
     {
         private static string apiKey = "b1c8a5cea60f17f305ee2d9e3305af25";
         // List of locations from last search. Gets identified by list index
-        Dictionary<int, locationObj.Location> searchLocationList = new Dictionary<int, locationObj.Location>(); 
+        List<locationObj.Location> searchLocationList = new List<locationObj.Location>(); 
 
         // List of saved locations. Gets loaded on program start. 
-        Dictionary<int, locationObj.Location> savedLocationList = new Dictionary<int, locationObj.Location>();
+        List<locationObj.Location> savedLocationList = new List<locationObj.Location>();
         public MainWindow()
         {
             InitializeComponent();
 
             CoordinateObj coordinates = getCoordinates();
             setCurrentWeather(coordinates.lat, coordinates.lon);
+            loadList();
         }
 
         private CoordinateObj getCoordinates()
@@ -54,6 +57,54 @@ namespace WeatherApp
             return coordinateObj;
         }
 
+        private void saveToList()
+        {
+            if (!savedLocationList.Contains(searchLocationList[searchListBox.SelectedIndex]))
+            {
+                savedLocationList.Add(searchLocationList[searchListBox.SelectedIndex]);
+                saveList();
+                loadList();
+            }
+        }
+
+        private void deleteFromList()
+        {
+            if (savedListBox.SelectedIndex != -1)
+            {
+                savedLocationList.RemoveAt(savedListBox.SelectedIndex);
+                saveList();
+                loadList();
+            }
+        }
+
+        private void saveList()
+        {
+            string output = JsonConvert.SerializeObject(savedLocationList);
+            Trace.WriteLine(output);
+            File.WriteAllText("savedCities.json", output);
+        }
+
+        private void loadList()
+        {
+            if (File.Exists("savedCities.json"))
+            {
+                savedListBox.Items.Clear();
+                string output = File.ReadAllText("savedCities.json");
+                savedLocationList = JsonConvert.DeserializeObject<List<locationObj.Location>>(output);
+                foreach (var l in savedLocationList)
+                {
+                    Trace.WriteLine($"{l.lat}, {l.lon}, {l.name}");
+                    addToSavedListBox(l.name, l.country);
+                }
+
+            }
+        }
+
+        private void addToSavedListBox(string city, string country)
+        {
+            savedListBox.Items.Add($"{city}, {country}");
+        }
+
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -70,16 +121,36 @@ namespace WeatherApp
             {
                 openWeatherButton.IsEnabled = true;
                 saveButton.IsEnabled = true;
-            } else
+                deleteButton.IsEnabled = false;
+                savedListBox.UnselectAll();
+            }
+        }
+
+        private void savedListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (savedListBox.SelectedItem != null)
             {
-                openWeatherButton.IsEnabled = false;
+                openWeatherButton.IsEnabled = true;
                 saveButton.IsEnabled = false;
+                deleteButton.IsEnabled = true;
+                searchListBox.UnselectAll();
             }
         }
 
         private void openWeatherButton_Click(object sender, RoutedEventArgs e)
         {
-            setCurrentWeather(searchLocationList[searchListBox.SelectedIndex].lat, searchLocationList[searchListBox.SelectedIndex].lon);
+            double lat = 0;
+            double lon = 0;
+            if (searchListBox.SelectedIndex != -1)
+            {
+                lat = searchLocationList[searchListBox.SelectedIndex].lat;
+                lon = searchLocationList[searchListBox.SelectedIndex].lon;
+            } else if (savedListBox.SelectedIndex != -1)
+            {
+                lat = savedLocationList[savedListBox.SelectedIndex].lat;
+                lon = savedLocationList[savedListBox.SelectedIndex].lon;
+            }
+            setCurrentWeather(lat, lon);
             tabControl.SelectedIndex = 0;
         }
 
@@ -95,7 +166,7 @@ namespace WeatherApp
                     foreach (var l in locations)
                     {
                         searchListBox.Items.Add($"{l.name}, {l.country}");
-                        searchLocationList.Add(searchListBox.Items.Count - 1, l);
+                        searchLocationList.Add(l);
                     }
                 }
             }
@@ -123,6 +194,16 @@ namespace WeatherApp
         private void setIcon(string iconId)
         {
             weatherIcon.Source = new BitmapImage(new Uri($"http://openweathermap.org/img/wn/{iconId}@4x.png"));
+        }
+
+        private void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            saveToList();
+        }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            deleteFromList();
         }
     }
 

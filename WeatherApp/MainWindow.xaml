@@ -46,10 +46,10 @@
                     <Label Content="City" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="30" RenderTransformOrigin="0.567,0.617"/>
                     <Label Content="Country" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Height="26" Width="52"/>
                     <ListBox x:Name="searchListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,10,215,10" HorizontalAlignment="Right" Width="200" SelectionChanged="searchListBox_SelectionChanged"/>
-                    <ListBox x:Name="savedListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,10,10,10" HorizontalAlignment="Right" Width="200"/>
+                    <ListBox x:Name="savedListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,10,10,10" HorizontalAlignment="Right" Width="200" SelectionChanged="savedListBox_SelectionChanged"/>
                     <Button x:Name="searchButton" Content="Search" Margin="10,72,420,0" VerticalAlignment="Top" Click="searchButton_Click" Height="20"/>
-                    <Button x:Name="saveButton" Content="Save To List" Margin="10,0,420,35" Height="20" VerticalAlignment="Bottom" IsEnabled="False"/>
-                    <Button x:Name="deleteButton" Content="Delete From List" Margin="10,0,420,10" Height="20" VerticalAlignment="Bottom" IsEnabled="False"/>
+                    <Button x:Name="saveButton" Content="Save To List" Margin="10,0,420,35" Height="20" VerticalAlignment="Bottom" IsEnabled="False" Click="saveButton_Click"/>
+                    <Button x:Name="deleteButton" Content="Delete From List" Margin="10,0,420,10" Height="20" VerticalAlignment="Bottom" IsEnabled="False" Click="deleteButton_Click"/>
                     <Button x:Name="openWeatherButton" Content="Open in Weather Tab" Margin="10,0,420,60" VerticalAlignment="Bottom" IsEnabled="False" Click="openWeatherButton_Click"/>
 
                 </Grid>

@@ -34,16 +34,6 @@ namespace WeatherApp
                 return null;
             }
         }
-
-        public static void saveToList(string name, string state, string country, double lat, double lon)
-        {
-
-        }
-        
-        public static void deleteFromList(string id)
-        {
-
-        }
     }
 }
 
